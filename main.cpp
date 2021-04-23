@@ -1,10 +1,9 @@
-#include "juego.h"
+#include "ejercito.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-	juego juego1();
 	Ejercito ejercito1("chinos");
 	Ejercito ejercito2("Ingleses");
 	Ejercito ejercito3("Bizantinos");
@@ -66,20 +65,44 @@ int main(int argc, char const *argv[])
 
 
 	// los transformo
-	cout << "transformación..."<<'\n';
-	cout << "pruebo piqueros:" << endl;
-	ejercito3.transformar("piquero");
-	ejercito3.getPiqueros();
-	ejercito3.getArqueros();
+	// cout << "transformación..."<<'\n';
+	// cout << "pruebo piqueros:" << endl;
+	// ejercito3.transformar("piquero");
+	// ejercito3.getPiqueros();
+	// ejercito3.getArqueros();
 
-	cout << "pruebo arqueros:" << endl;
-	ejercito3.transformar("arquero");
-	ejercito3.getArqueros();
-	ejercito3.getCaballeros();
+	// cout << "pruebo arqueros:" << endl;
+	// ejercito3.transformar("arquero");
+	// ejercito3.getArqueros();
+	// ejercito3.getCaballeros();
 
-	cout << "pruebo caballeros:" << endl;
-	ejercito3.transformar("caballero");
-	ejercito3.getCaballeros();
+	// cout << "pruebo caballeros:" << endl;
+	// ejercito3.transformar("caballero");
+	// ejercito3.getCaballeros();
+
+	// batalla
+	cout << "inicio ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "inicio ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	//batalla
+	cout << endl;
+	ejercito1.batallar(ejercito2);
+	cout << "fin ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
+	cout << "fin ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
 
 	return 0;
 }
+

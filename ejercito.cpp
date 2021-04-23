@@ -296,10 +296,9 @@ void Ejercito::borrarUnidadesMasFuertes(int cantidad){
 	{
 		// primero busco en todas las unidades de las 3 listas (piqueros, arqueros y caballeros) cual es el mas fuerte.
 		// busco el de mayor fuerza en piqueros
-		list<Piquero> piqueros = this->_piqueros;
-		std::list<Piquero>::iterator iterPiqueros = piqueros.begin();	
+		std::list<Piquero>::iterator iterPiqueros = this->_piqueros.begin();	
 		tuple<int, std::list<Piquero>::iterator> maxPiqueros = make_tuple(0, iterPiqueros);
-		while (iterPiqueros != piqueros.end())
+		while (iterPiqueros != this->_piqueros.end())
 		{
 
 			if(get<0>(maxPiqueros) < (*iterPiqueros).getFuerza()){
@@ -311,10 +310,9 @@ void Ejercito::borrarUnidadesMasFuertes(int cantidad){
 
 
 		// busco el de mayor fuerza en arqueros
-		list<Arquero> arqueros = this->_arqueros;
-		std::list<Arquero>::iterator iterArqueros = arqueros.begin();	
+		std::list<Arquero>::iterator iterArqueros = this->_arqueros.begin();	
 		tuple<int, std::list<Arquero>::iterator> maxArqueros = make_tuple(0, iterArqueros);
-		while (iterArqueros != arqueros.end())
+		while (iterArqueros != this->_arqueros.end())
 		{
 
 			if(get<0>(maxArqueros) < (*iterArqueros).getFuerza()){
@@ -325,10 +323,9 @@ void Ejercito::borrarUnidadesMasFuertes(int cantidad){
 		}
 
 		// busco el de mayor fuerza en arqueros
-		list<Caballero> caballeros = this->_caballeros;
-		std::list<Caballero>::iterator iterCaballeros = caballeros.begin();	
+		std::list<Caballero>::iterator iterCaballeros = this->_caballeros.begin();	
 		tuple<int, std::list<Caballero>::iterator> maxCaballeros = make_tuple(0, iterCaballeros);
-		while (iterCaballeros != caballeros.end())
+		while (iterCaballeros != this->_caballeros.end())
 		{
 
 			if(get<0>(maxCaballeros) < (*iterCaballeros).getFuerza()){
@@ -342,14 +339,31 @@ void Ejercito::borrarUnidadesMasFuertes(int cantidad){
 
 		if(get<0>(maxCaballeros) >= get<0>(maxArqueros) && get<0>(maxCaballeros) >= get<0>(maxPiqueros)){
 			// el maximo es de caballeros, asi que lo elimino.
-			caballeros.erase(get<1>(maxCaballeros));
+			this->_caballeros.erase(get<1>(maxCaballeros));
 		} else if(get<0>(maxArqueros) >= get<0>(maxPiqueros)){ // el mayor es de arquero o piquero.
 			// el maximo es de arqueros, asi que lo elimino.
-			arqueros.erase(get<1>(maxArqueros));
+			this->_arqueros.erase(get<1>(maxArqueros));
 		} else{
 			// el maximo es de piqueros, asi que lo elimino.
-			piqueros.erase(get<1>(maxPiqueros));
+			this->_piqueros.erase(get<1>(maxPiqueros));
 		}
 	}
 	
+}
+
+void Ejercito::batallar(Ejercito &ejercitoEnemigo){
+	// esto siempre se actualiza sin importar quien gane.
+	ejercitoEnemigo.actualizarHistorial(this->getCivilizacion());
+	this->actualizarHistorial(ejercitoEnemigo.getCivilizacion());
+	if(ejercitoEnemigo.getPuntosTotales() < ejercitoEnemigo.getPuntosTotales()){ // ganó ejercito2.
+		this->aumentar100MonedasPorGanar();
+		ejercitoEnemigo.borrarUnidadesMasFuertes(2);
+	} else if (ejercitoEnemigo.getPuntosTotales() > ejercitoEnemigo.getPuntosTotales()){ // ganó ejercitoEnemigo.
+		ejercitoEnemigo.aumentar100MonedasPorGanar();
+		this->borrarUnidadesMasFuertes(2);
+	} else { // empate.
+		// cada uno pierde la unidad de mas valor.
+		ejercitoEnemigo.borrarUnidadesMasFuertes(1);
+		this->borrarUnidadesMasFuertes(1);
+	}
 }

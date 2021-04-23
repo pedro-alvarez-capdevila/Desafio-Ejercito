@@ -47,6 +47,8 @@ class Ejercito {
 		void aumentar100MonedasPorGanar();
 		void borrarUnidadesMasFuertes(int cantidad);
 
+		void batallar(Ejercito &ejercitoEnemigo);
+
 	private:
 		int _monedas;
 		int _puntosTotales; // decido guardar los puntos totales por una cuestion de eficiencia:
