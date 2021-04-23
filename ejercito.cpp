@@ -63,49 +63,57 @@ void Ejercito::asignarUnidades(string unidad, int cantidad){
 
 void Ejercito::entrenar(string unidad, int fuerza){
 	if(unidad == "Piquero" || unidad == "piquero"){
-		for (auto elem : this->_piqueros)
+		std::list<Piquero>::iterator iter = this->_piqueros.begin();	
+		while (iter != this->_piqueros.end())
 		{
-			if(elem.getFuerza() == fuerza){
-				elem.entrenar();
+			if((*iter).getFuerza() == fuerza){
+				(*iter).entrenar();
 				this->_monedas -= 10;
 				this->_puntosTotales += 3;
+				break;
 			}
-			break;
+			iter++;
 		}
 	} else if(unidad == "Arquero" || unidad == "arquero"){
-		for (auto elem : this->_arqueros)
+		std::list<Arquero>::iterator iter = this->_arqueros.begin();	
+		while (iter != this->_arqueros.end())
 		{
-			if(elem.getFuerza() == fuerza){
-				elem.entrenar();
+			if((*iter).getFuerza() == fuerza){
+				(*iter).entrenar();
 				this->_monedas -= 20;
 				this->_puntosTotales += 7;
+				break;
 			}
-			break;
+			iter++;
 		}
+	
 	} else if(unidad == "Caballero" || unidad == "caballero"){
-		for (auto elem : this->_caballeros)
+		std::list<Caballero>::iterator iter = this->_caballeros.begin();	
+		while (iter != this->_caballeros.end())
 		{
-			if(elem.getFuerza() == fuerza){
-				elem.entrenar();
+			if((*iter).getFuerza() == fuerza){
+				(*iter).entrenar();
 				this->_monedas -= 30;
 				this->_puntosTotales += 10;
+				break;
 			}
-			break;
+			iter++;
 		}
 	}
+
+
 	
 }
 
 void Ejercito::transformar(string unidad){
 	if(unidad == "Piquero" || unidad == "piquero"){
 		// busco el de menor fuerza
-		list<Piquero> piqueros = this->_piqueros;
-		std::list<Piquero>::iterator iter = piqueros.begin();	
-		tuple<int, std::list<Piquero>::iterator> min = make_tuple(0, iter);
-		while (iter != piqueros.end())
+		std::list<Piquero>::iterator iter = this->_piqueros.begin();	
+		tuple<int, std::list<Piquero>::iterator> min = make_tuple((*iter).getFuerza(), iter);
+		while (iter != this->_piqueros.end())
 		{
 
-			if(get<0>(min) > (*iter).getFuerza()){
+			if(get<0>(min) < (*iter).getFuerza()){
 				get<0>(min) = (*iter).getFuerza();
 				get<1>(min) = iter;
 			}
@@ -114,7 +122,8 @@ void Ejercito::transformar(string unidad){
 		// elimino el minimo
 		// en minimo me guarde un iterador al minimo, por lo que puedo borrarlo directamente.
 		if(get<0>(min) != 0){ // si es igual a 0, implica que piqueros no tiene elementos
-			piqueros.erase(get<1>(min));
+			this->_piqueros.erase(get<1>(min));
+
 			// ahora solo queda agregar un arquero a this->_arqueros
 			asignarUnidades("arquero", 1);
 		}
@@ -123,13 +132,12 @@ void Ejercito::transformar(string unidad){
 		
 	} else if(unidad == "Arquero" || unidad == "arquero"){
 		// busco el de menor fuerza
-		list<Arquero> arqueros = this->_arqueros;
-		std::list<Arquero>::iterator iter = arqueros.begin();	
+		std::list<Arquero>::iterator iter = this->_arqueros.begin();	
 		tuple<int, std::list<Arquero>::iterator> min = make_tuple(0, iter);
-		while (iter != arqueros.end())
+		while (iter != this->_arqueros.end())
 		{
 
-			if(get<0>(min) > (*iter).getFuerza()){
+			if(get<0>(min) < (*iter).getFuerza()){
 				get<0>(min) = (*iter).getFuerza();
 				get<1>(min) = iter;
 			}
@@ -138,7 +146,7 @@ void Ejercito::transformar(string unidad){
 		// elimino el minimo
 		// en min me guarde un iterador al minimo, por lo que puedo borrarlo directamente.
 		if(get<0>(min) != 0){ // si es igual a 0, implica que arqueros no tiene elementos
-			arqueros.erase(get<1>(min));
+			this->_arqueros.erase(get<1>(min));
 			// ahora solo queda agregar un arquero a this->_arqueros
 			asignarUnidades("caballero", 1);
 		}
@@ -159,50 +167,49 @@ bool perteneceAListaDeInt(list<int> list, int a){
 
 }
 
-list<tuple<cantidad, nivelDeFuerza>> Ejercito::getPiqueros(){
+void Ejercito::getPiqueros(){
 	// primero guardo en una lista la cantidad de fuerzas distintas que hay.
+
 	list<int> fuerzas;
-	list<Piquero> listaPiqueros = this->_piqueros;
 	int max = 0;
 
-	for(auto piquero : listaPiqueros){
+	for(auto piquero : this->_piqueros){
 		if(!perteneceAListaDeInt(fuerzas, piquero.getFuerza())){ // si no pertence, lo agrego a fuerzas.
 			fuerzas.push_back(piquero.getFuerza());
 		}
-		if(max < piquero.getFuerza()){ // obtengo el piquero que tiene la mayor fuerza.
+		if(max < piquero.getFuerza()){ // obtengo el piquero que tiene la mayor fuerza, asi conozco la cota del array que crearé.
 			max = piquero.getFuerza();
 		}
 	}
-
+	
 	// ahora en "fuerzas" tengo los distintas fuerzas que hay y 
-	int contadorDeUnidadadesPorFuerza[max];
+	int contadorDeUnidadadesPorFuerza[max+1];
+	for(int i = 0; i <= max; i++){ // inicializo todos en 0
+		contadorDeUnidadadesPorFuerza[i] = 0;
+	}
 
-	for(auto piquero : listaPiqueros){
+	for(auto piquero : this->_piqueros){
 		contadorDeUnidadadesPorFuerza[piquero.getFuerza()]++;
 	}
 
 	// creo la salida
-	list<tuple<cantidad, nivelDeFuerza>> rta;
-	for(auto fuerza : fuerzas){
-		tuple<cantidad, nivelDeFuerza> elem = make_tuple(contadorDeUnidadadesPorFuerza[fuerza], fuerza);
-		cout << "fuerza: " << fuerza << "  cantidad de unidades: " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
-		rta.push_back(elem);
-	}
 
-	return rta;
+
+	for(auto fuerza : fuerzas){
+		cout << "cantidad de piqueros con fuerza " << fuerza << ": " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
+	}
 
 	
 }
 
 
 
-list<tuple<cantidad, nivelDeFuerza>> Ejercito::getArqueros(){
+void Ejercito::getArqueros(){
 	// primero guardo en una lista la cantidad de fuerzas distintas que hay.
 	list<int> fuerzas;
-	list<Arquero> listaArqueros = this->_arqueros;
 	int max = 0;
 
-	for(auto arquero : listaArqueros){
+	for(auto arquero : this->_arqueros){
 		if(!perteneceAListaDeInt(fuerzas, arquero.getFuerza())){ // si no pertence, lo agrego a fuerzas.
 			fuerzas.push_back(arquero.getFuerza());
 		}
@@ -212,33 +219,31 @@ list<tuple<cantidad, nivelDeFuerza>> Ejercito::getArqueros(){
 	}
 
 	// ahora en "fuerzas" tengo los distintas fuerzas que hay y 
-	int contadorDeUnidadadesPorFuerza[max];
+	int contadorDeUnidadadesPorFuerza[max+1];
+	for(int i = 0; i <= max; i++){ // inicializo todos en 0
+		contadorDeUnidadadesPorFuerza[i] = 0;
+	}
 
-	for(auto arquero : listaArqueros){
+	for(auto arquero : this->_arqueros){
 		contadorDeUnidadadesPorFuerza[arquero.getFuerza()]++;
 	}
 
 	// creo la salida
-	list<tuple<cantidad, nivelDeFuerza>> rta;
 	for(auto fuerza : fuerzas){
-		tuple<cantidad, nivelDeFuerza> elem = make_tuple(contadorDeUnidadadesPorFuerza[fuerza], fuerza);
-		cout << "fuerza: " << fuerza << "  cantidad de unidades: " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
-		rta.push_back(elem);
+		cout << "cantidad de arqueros con fuerza " << fuerza << ": " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
 	}
 
-	return rta;
 
 }
 
 
 
-list<tuple<cantidad, nivelDeFuerza>> Ejercito::getCaballeros(){
+void Ejercito::getCaballeros(){
 	// primero guardo en una lista la cantidad de fuerzas distintas que hay.
 	list<int> fuerzas;
-	list<Caballero> listaCaballeros = this->_caballeros;
 	int max = 0;
 
-	for(auto caballero : listaCaballeros){
+	for(auto caballero : this->_caballeros){
 		if(!perteneceAListaDeInt(fuerzas, caballero.getFuerza())){ // si no pertence, lo agrego a fuerzas.
 			fuerzas.push_back(caballero.getFuerza());
 		}
@@ -248,21 +253,20 @@ list<tuple<cantidad, nivelDeFuerza>> Ejercito::getCaballeros(){
 	}
 
 	// ahora en "fuerzas" tengo los distintas fuerzas que hay y 
-	int contadorDeUnidadadesPorFuerza[max]; // aca voy a tener en la posicion 7 por ejemplo, la cantidad de unidades con fuerza 7.
-
-	for(auto caballero : listaCaballeros){
+	int contadorDeUnidadadesPorFuerza[max+1]; // aca voy a tener en la posicion 7 por ejemplo, la cantidad de unidades con fuerza 7.
+	for(int i = 0; i <= max; i++){ // inicializo todos en 0
+		contadorDeUnidadadesPorFuerza[i] = 0;
+	}
+	
+	for(auto caballero : this->_caballeros){
 		contadorDeUnidadadesPorFuerza[caballero.getFuerza()]++;
 	}
 
 	// creo la salida
-	list<tuple<cantidad, nivelDeFuerza>> rta;
 	for(auto fuerza : fuerzas){
-		tuple<cantidad, nivelDeFuerza> elem = make_tuple(contadorDeUnidadadesPorFuerza[fuerza], fuerza);
-		cout << "fuerza: " << fuerza << "  cantidad de unidades: " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
-		rta.push_back(elem);
+		cout << "cantidad de caballeros con fuerza " << fuerza << ": " << contadorDeUnidadadesPorFuerza[fuerza] << '\n';
 	}
 
-	return rta;
 
 }
 
@@ -278,6 +282,10 @@ void Ejercito::actualizarHistorial(string ejercitoEnemigo){
 
 string Ejercito::getCivilizacion(){
 	return this->_civilizacion;
+}
+
+int Ejercito::getMonedas(){
+	return this->_monedas;
 }
 void Ejercito::aumentar100MonedasPorGanar(){
 	this->_monedas +=100;

@@ -24,7 +24,8 @@ class Ejercito {
 		~Ejercito();
 
 		// entrenara la unidad indicada por "unidad", y que tenga el nivel de fuerza indicado por "fuerza".
-		// si la unidad no está bien escrita (se acepta que empiece tanto con como sin mayuscula) o no hay una unidad con esa fuerza, no hará nada.
+		// si la unidad no está bien escrita o no hay una unidad con esa fuerza,  no hará nada.
+		//unidades: "piquero", "arquero", "caballero"
 		void entrenar(string unidad, int fuerza); 
 
 		// considero que cuando transformas a una unidad, esta pasara a tener el valor de fuerza inicial.
@@ -32,12 +33,14 @@ class Ejercito {
 		void transformar(string unidad);
 
 
-		list<tuple<cantidad, nivelDeFuerza>> getPiqueros();
-		list<tuple<cantidad, nivelDeFuerza>> getArqueros();
-		list<tuple<cantidad, nivelDeFuerza>> getCaballeros();
+		void getPiqueros();
+		void getArqueros();
+		void getCaballeros();
 
 		int getPuntosTotales();
+		int getMonedas();
 		string getCivilizacion();
+
 
 		// estas deberian ser funciones privadas, pero no logré hacer que cuando le pongo friend, me deje usarlas en juego.
 		void actualizarHistorial(string ejercitoEnemigo);
