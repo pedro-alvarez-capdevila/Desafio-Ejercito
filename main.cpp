@@ -86,22 +86,118 @@ int main(int argc, char const *argv[])
 	ejercito1.getArqueros();
 	ejercito1.getCaballeros();
 	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
 	cout << "inicio ejercito2:" << endl;
 	ejercito2.getPiqueros();
 	ejercito2.getArqueros();
 	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+	cout << endl;
+	cout << "batallas..."<<endl;
+	cout << "caso: ejercito2 mas fuerte" << endl;
+	ejercito1.batallar(ejercito2);
+	cout << "fin ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
 	cout << "monedas: " << ejercito1.getMonedas() << endl;
-	//batalla
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
+	cout << "fin ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+
+	cout << endl;
+	cout << endl;
+	cout << "caso: ejercito1 mas fuerte" << endl;
+	ejercito1.transformar("arquero");
+	ejercito1.transformar("arquero");
+	ejercito1.entrenar("caballero", 20);
+	ejercito1.entrenar("caballero", 30);
+	ejercito1.entrenar("caballero", 40);
+	ejercito1.entrenar("caballero", 50);
+	ejercito1.entrenar("caballero", 60); 
+	ejercito1.entrenar("caballero", 20);
+	ejercito1.entrenar("caballero", 30);
+	ejercito1.entrenar("caballero", 40);
+	ejercito1.entrenar("caballero", 50); 
+	ejercito1.entrenar("caballero", 60); 
+
+	cout << "inicio ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
+	cout << "inicio ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+
 	cout << endl;
 	ejercito1.batallar(ejercito2);
 	cout << "fin ejercito1:" << endl;
 	ejercito1.getPiqueros();
 	ejercito1.getArqueros();
 	ejercito1.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
 	cout << "fin ejercito2:" << endl;
 	ejercito2.getPiqueros();
 	ejercito2.getArqueros();
 	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+
+
+	cout << endl;
+	cout << endl;
+	cout << "caso: empate" << endl;
+	ejercito2.entrenar("caballero", 20);
+	ejercito2.entrenar("caballero", 30);
+	ejercito2.entrenar("caballero", 20);
+	ejercito2.entrenar("caballero", 30);
+	ejercito2.entrenar("caballero", 40);
+
+
+	cout << "inicio ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
+	cout << "inicio ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+
+	cout << endl;
+	ejercito1.batallar(ejercito2);
+	cout << "fin ejercito1:" << endl;
+	ejercito1.getPiqueros();
+	ejercito1.getArqueros();
+	ejercito1.getCaballeros();
+	cout << "monedas: " << ejercito1.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito1.getPuntosTotales() << endl;
+	cout << "fin ejercito2:" << endl;
+	ejercito2.getPiqueros();
+	ejercito2.getArqueros();
+	ejercito2.getCaballeros();
+	cout << "monedas: " << ejercito2.getMonedas() << endl;
+	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+	
+	cout << endl;
+	cout << endl;
+	cout << "historial..." << endl;
+	ejercito1.getHistorial();
+	ejercito2.getHistorial();
 
 	return 0;
 }

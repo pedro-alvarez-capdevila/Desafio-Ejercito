@@ -287,8 +287,15 @@ string Ejercito::getCivilizacion(){
 int Ejercito::getMonedas(){
 	return this->_monedas;
 }
-void Ejercito::aumentar100MonedasPorGanar(){
-	this->_monedas +=100;
+
+list<string> Ejercito::getHistorial(){
+	std::list<string>::iterator iterHistorial = this->_historial.begin();
+	while(iterHistorial != this->_historial.end()){
+		cout << (*iterHistorial) << endl;
+		iterHistorial++;
+	}
+	return this->_historial;
+	
 }
 
 void Ejercito::borrarUnidadesMasFuertes(int cantidad){
@@ -339,12 +346,15 @@ void Ejercito::borrarUnidadesMasFuertes(int cantidad){
 
 		if(get<0>(maxCaballeros) >= get<0>(maxArqueros) && get<0>(maxCaballeros) >= get<0>(maxPiqueros)){
 			// el maximo es de caballeros, asi que lo elimino.
+			this->_puntosTotales -= (*get<1>(maxCaballeros)).getFuerza();// lo resto de los puntos totales del ejercito:
 			this->_caballeros.erase(get<1>(maxCaballeros));
 		} else if(get<0>(maxArqueros) >= get<0>(maxPiqueros)){ // el mayor es de arquero o piquero.
 			// el maximo es de arqueros, asi que lo elimino.
+			this->_puntosTotales -= (*get<1>(maxArqueros)).getFuerza();
 			this->_arqueros.erase(get<1>(maxArqueros));
 		} else{
 			// el maximo es de piqueros, asi que lo elimino.
+			this->_puntosTotales -= (*get<1>(maxPiqueros)).getFuerza();
 			this->_piqueros.erase(get<1>(maxPiqueros));
 		}
 	}
@@ -355,11 +365,11 @@ void Ejercito::batallar(Ejercito &ejercitoEnemigo){
 	// esto siempre se actualiza sin importar quien gane.
 	ejercitoEnemigo.actualizarHistorial(this->getCivilizacion());
 	this->actualizarHistorial(ejercitoEnemigo.getCivilizacion());
-	if(ejercitoEnemigo.getPuntosTotales() < ejercitoEnemigo.getPuntosTotales()){ // ganó ejercito2.
-		this->aumentar100MonedasPorGanar();
+	if(ejercitoEnemigo.getPuntosTotales() < this->getPuntosTotales()){ // ganó ejercito2.
+		this->_monedas =+ 100;
 		ejercitoEnemigo.borrarUnidadesMasFuertes(2);
-	} else if (ejercitoEnemigo.getPuntosTotales() > ejercitoEnemigo.getPuntosTotales()){ // ganó ejercitoEnemigo.
-		ejercitoEnemigo.aumentar100MonedasPorGanar();
+	} else if (ejercitoEnemigo.getPuntosTotales() > this->getPuntosTotales()){ // ganó ejercitoEnemigo.
+		ejercitoEnemigo._monedas +=100;
 		this->borrarUnidadesMasFuertes(2);
 	} else { // empate.
 		// cada uno pierde la unidad de mas valor.

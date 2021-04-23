@@ -40,12 +40,10 @@ class Ejercito {
 		int getPuntosTotales();
 		int getMonedas();
 		string getCivilizacion();
+		list<string> getHistorial();
 
 
 		// estas deberian ser funciones privadas, pero no logré hacer que cuando le pongo friend, me deje usarlas en juego.
-		void actualizarHistorial(string ejercitoEnemigo);
-		void aumentar100MonedasPorGanar();
-		void borrarUnidadesMasFuertes(int cantidad);
 
 		void batallar(Ejercito &ejercitoEnemigo);
 
@@ -60,6 +58,8 @@ class Ejercito {
 		list<string> _historial; // cada string será el ejercito enemigo contra el que batalló.
 		// funciones privadas:
 		void asignarUnidades(string unidad, int cantidad);
+		void actualizarHistorial(string ejercitoEnemigo);
+		void borrarUnidadesMasFuertes(int cantidad);
 		
 };
 
