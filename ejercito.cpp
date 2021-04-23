@@ -13,6 +13,7 @@ Ejercito::Ejercito(string civilizacion){
 		this->_historial;
 		this->_monedas = 1000;
 		this->_civilizacion = "Chinos";
+		this->_puntosTotales = 2*5 + 25*10 + 2*20;
 	} else if(civilizacion == "ingleses" || civilizacion == "Ingleses"){
 		asignarUnidades("piquero", 10);
 		asignarUnidades("arquero", 10);
@@ -20,6 +21,7 @@ Ejercito::Ejercito(string civilizacion){
 		this->_historial;
 		this->_monedas = 1000;
 		this->_civilizacion = "Ingleses";
+		this->_puntosTotales = 10*5 + 10*10 + 10*20;
 	} else{
 		// para evitar problemas, asumo que si pone mal la civilización, seran bizantinos
 		asignarUnidades("piquero", 5);
@@ -28,6 +30,7 @@ Ejercito::Ejercito(string civilizacion){
 		this->_historial;
 		this->_monedas = 1000;
 		this->_civilizacion = "Bizantinos";
+		this->_puntosTotales = 5*5 + 8*10 + 15*20;
 	}
 }
 
@@ -60,29 +63,37 @@ void Ejercito::entrenar(string unidad, int fuerza){
 		{
 			if(elem.getFuerza() == fuerza){
 				elem.entrenar();
+				this->_monedas -= 10;
+				this->_puntosTotales += 3;
 			}
+			break;
 		}
 	} else if(unidad == "Arquero" || unidad == "arquero"){
 		for (auto elem : this->_arqueros)
 		{
 			if(elem.getFuerza() == fuerza){
 				elem.entrenar();
+				this->_monedas -= 20;
+				this->_puntosTotales += 7;
 			}
+			break;
 		}
 	} else if(unidad == "Caballero" || unidad == "caballero"){
 		for (auto elem : this->_caballeros)
 		{
 			if(elem.getFuerza() == fuerza){
 				elem.entrenar();
-				this->_caballeros
+				this->_monedas -= 30;
+				this->_puntosTotales += 10;
 			}
+			break;
 		}
 	}
 	
 }
 
 void transformar(string unidad){
-
+	
 }
 
 
@@ -170,7 +181,9 @@ list<tuple<cantidad, nivelDeFuerza>> Ejercito::getArqueros(){
 
 }
 
-list<tuple<cantidad, nivelDeFuerza>> Ejercito::getArqueros(){
+
+
+list<tuple<cantidad, nivelDeFuerza>> Ejercito::getCaballeros(){
 	// primero guardo en una lista la cantidad de fuerzas distintas que hay.
 	list<int> fuerzas;
 	list<Caballero> listaCaballeros = this->_caballeros;
@@ -206,4 +219,17 @@ list<tuple<cantidad, nivelDeFuerza>> Ejercito::getArqueros(){
 
 
 
+int Ejercito::getPuntosTotales(){
+	return this->_puntosTotales;
+}
 
+void Ejercito::actualizarHistorial(string ejercitoEnemigo){
+	this->_historial.push_back(ejercitoEnemigo);
+}
+
+string Ejercito::getCivilizacion(){
+	return this->_civilizacion;
+}
+void Ejercito::aumentar100MonedasPorGanar(){
+	this->_monedas +=100;
+}

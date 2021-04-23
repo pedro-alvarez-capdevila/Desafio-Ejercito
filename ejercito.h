@@ -6,18 +6,19 @@
 #include <string>
 #include <iostream>
 #include <list>
+#include <tuple>
+
 #include "piquero.h"
-#include "tuple"
-
-
 #include "arquero.h"
 #include "caballero.h"
+
 
 using namespace std;
 typedef int nivelDeFuerza;
 typedef int cantidad;
 
 class Ejercito {
+	friend class juego;
 	public:
 		Ejercito(string civilizacion);
 
@@ -33,14 +34,23 @@ class Ejercito {
 		list<tuple<cantidad, nivelDeFuerza>> getArqueros();
 		list<tuple<cantidad, nivelDeFuerza>> getCaballeros();
 
+		int getPuntosTotales();
+		string getCivilizacion();
+
+		void actualizarHistorial(string ejercitoEnemigo);
+		void aumentar100MonedasPorGanar();
+
 
 	private:
 		int _monedas;
+		int _puntosTotales; // decido guardar los puntos totales por una cuestion de eficiencia:
+												//	es sencillo actualizarlo y me evito recorrer las 3 listas cada vez que quiero obtener los puntos totales.
+		
 		list<Piquero> _piqueros;
 		list<Arquero> _arqueros;
 		list<Caballero> _caballeros;
 		string _civilizacion;
-		list<string> _historial; 
+		list<string> _historial; // cada string será el ejercito enemigo contra el que batalló.
 		// funciones privadas:
 		void asignarUnidades(string unidad, int cantidad);
 };
