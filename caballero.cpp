@@ -11,3 +11,7 @@ void Caballero::entrenar() {
 int Caballero::getFuerza(){
 	return this->_fuerza;
 }
+
+Caballero::~Caballero(){
+	
+}

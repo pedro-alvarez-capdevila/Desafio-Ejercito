@@ -11,3 +11,7 @@ void Piquero::entrenar() {
 int Piquero::getFuerza(){
 	return this->_fuerza;
 }
+		
+Piquero::~Piquero(){
+	
+}

@@ -9,6 +9,7 @@ using namespace std;
 
 class juego {
 	public:
+		~juego();
 		void batallar(Ejercito &ejercito1, Ejercito &ejercito2);
 
 

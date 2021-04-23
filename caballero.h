@@ -10,6 +10,7 @@ using namespace std;
 class Caballero {
 	public:
 		Caballero();
+		~Caballero();
 		void entrenar();
 
 		int getFuerza();

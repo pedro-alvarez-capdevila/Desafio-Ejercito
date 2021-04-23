@@ -11,3 +11,7 @@ void Arquero::entrenar() {
 int Arquero::getFuerza(){
 	return this->_fuerza;
 }
+
+Arquero::~Arquero(){
+	
+}

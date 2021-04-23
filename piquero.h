@@ -10,6 +10,7 @@ using namespace std;
 class Piquero {
 	public:
 		Piquero();
+		~Piquero();
 		void entrenar();
 
 		int getFuerza();
