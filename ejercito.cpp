@@ -366,7 +366,7 @@ void Ejercito::batallar(Ejercito &ejercitoEnemigo){
 	ejercitoEnemigo.actualizarHistorial(this->getCivilizacion());
 	this->actualizarHistorial(ejercitoEnemigo.getCivilizacion());
 	if(ejercitoEnemigo.getPuntosTotales() < this->getPuntosTotales()){ // ganó ejercito2.
-		this->_monedas =+ 100;
+		this->_monedas += 100;
 		ejercitoEnemigo.borrarUnidadesMasFuertes(2);
 	} else if (ejercitoEnemigo.getPuntosTotales() > this->getPuntosTotales()){ // ganó ejercitoEnemigo.
 		ejercitoEnemigo._monedas +=100;

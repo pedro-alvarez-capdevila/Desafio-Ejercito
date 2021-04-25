@@ -93,8 +93,10 @@ int main(int argc, char const *argv[])
 	ejercito2.getCaballeros();
 	cout << "monedas: " << ejercito2.getMonedas() << endl;
 	cout << "puntosTotales: " << ejercito2.getPuntosTotales() << endl;
+
 	cout << endl;
 	cout << "batallas..."<<endl;
+	
 	cout << "caso: ejercito2 mas fuerte" << endl;
 	ejercito1.batallar(ejercito2);
 	cout << "fin ejercito1:" << endl;

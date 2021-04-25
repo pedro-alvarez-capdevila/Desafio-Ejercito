@@ -28,11 +28,13 @@ class Ejercito {
 		//unidades: "piquero", "arquero", "caballero"
 		void entrenar(string unidad, int fuerza); 
 
-		// considero que cuando transformas a una unidad, esta pasara a tener el valor de fuerza inicial.
-		// por lo que cuando transformas a una unidad, se transformará a la que tenga menor nivel de fuerza ya que es lo mas conveniente.
+		// considero que cuando transformas a una unidad, esta pasara a tener el valor de fuerza inicial/base..
+		// por lo que cuando transformas a una unidad, se transformará a la que tenga menor nivel de fuerza ya que es lo mas conveniente para el jugador.
 		void transformar(string unidad);
 
 
+		// agrego estas funciones de get para que el jugador pueda saber como está compuesto su ejercito y en base a eso transformarlos/entrenarlos
+		// para batallar.
 		void getPiqueros();
 		void getArqueros();
 		void getCaballeros();
@@ -42,8 +44,6 @@ class Ejercito {
 		string getCivilizacion();
 		list<string> getHistorial();
 
-
-		// estas deberian ser funciones privadas, pero no logré hacer que cuando le pongo friend, me deje usarlas en juego.
 
 		void batallar(Ejercito &ejercitoEnemigo);
 
